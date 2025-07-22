@@ -1,7 +1,7 @@
-import Dashboard from "@/components/Dashboard";
+import AuthWrapper from "@/components/auth/AuthWrapper";
 
 const Index = () => {
-  return <Dashboard />;
+  return <AuthWrapper />;
 };
 
 export default Index;

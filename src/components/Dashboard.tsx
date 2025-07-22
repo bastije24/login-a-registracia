@@ -1,9 +1,14 @@
-import { Calendar, Clock, Mail, User, Brain, CheckCircle2, AlertCircle, Clock3 } from "lucide-react";
+import { Calendar, Clock, Mail, User, Brain, CheckCircle2, AlertCircle, Clock3, LogOut } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const Dashboard = () => {
+interface DashboardProps {
+  user?: { name: string; email: string } | null;
+  onLogout?: () => void;
+}
+
+const Dashboard = ({ user, onLogout }: DashboardProps) => {
   // Mock data
   const todayTasks = [
     { id: 1, title: "Review project proposal", priority: "high", time: "09:00", status: "pending" },
@@ -49,19 +54,41 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-subtle p-6">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <header className="text-center space-y-4 animate-fade-in">
-          <div className="flex items-center justify-center gap-3">
+        <header className="flex justify-between items-center animate-fade-in">
+          <div className="flex items-center gap-3">
             <div className="p-3 rounded-2xl bg-gradient-primary shadow-glow">
               <Brain className="h-8 w-8 text-primary-foreground" />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              AINBOX MANAGER
-            </h1>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                AINBOX MANAGER
+              </h1>
+              {user && (
+                <p className="text-muted-foreground">
+                  Vitaj späť, {user.name}!
+                </p>
+              )}
+            </div>
           </div>
+          
+          {onLogout && (
+            <Button
+              variant="outline"
+              onClick={onLogout}
+              className="flex items-center gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              Odhlásiť sa
+            </Button>
+          )}
+        </header>
+
+        {/* Subtitle */}
+        <div className="text-center">
           <p className="text-muted-foreground text-lg">
             Tvoj osobný pracovný priestor pre kľud v hlave a poriadok v prioritách
           </p>
-        </header>
+        </div>
 
         {/* Main Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
